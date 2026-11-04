@@ -1,7 +1,7 @@
 import pytest
 
-from nextcountry.config import GEOJSON_COUNTRIES_PATH
-from nextcountry.geomap import (
+from nextsky.config import GEOJSON_COUNTRIES_PATH
+from nextsky.geomap import (
     MapStatus,
     build_country_status_lookup,
     build_world_map_figure,
@@ -9,7 +9,7 @@ from nextcountry.geomap import (
     resolve_target_codes_on_geojson,
     status_for_country,
 )
-from nextcountry.targets import DEFAULT_TARGET_COUNTRY_CODES
+from nextsky.targets import DEFAULT_TARGET_COUNTRY_CODES
 
 
 def test_normalize_special_country_codes():

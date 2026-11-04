@@ -3,7 +3,7 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nextcountry"
+name = "nextsky"
 version = "0.1.0"
 description = "Discover unvisited countries and plan trips by priority."
 readme = "README.md"

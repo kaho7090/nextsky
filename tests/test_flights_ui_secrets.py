@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from nextcountry.flights.env_loader import apply_travelport_env_from_mapping
+from nextsky.flights.env_loader import apply_travelport_env_from_mapping
 from streamlit.errors import StreamlitSecretNotFoundError
 
 
@@ -21,19 +21,19 @@ def test_apply_travelport_env_from_mapping_does_not_override(monkeypatch):
 
 def test_hydrate_ignores_missing_secrets_file(monkeypatch):
     pytest.importorskip("streamlit")
-    from nextcountry.flights.ui import _hydrate_travelport_env_from_streamlit_secrets
+    from nextsky.flights.ui import _hydrate_travelport_env_from_streamlit_secrets
 
     mock_st = MagicMock()
     type(mock_st).secrets = property(
         lambda self: (_ for _ in ()).throw(StreamlitSecretNotFoundError())
     )
 
-    with patch("nextcountry.flights.ui.st", mock_st):
+    with patch("nextsky.flights.ui.st", mock_st):
         _hydrate_travelport_env_from_streamlit_secrets()
 
 
 def test_hydrate_ignores_key_lookup_when_secrets_unavailable(monkeypatch):
-    from nextcountry.flights.ui import _hydrate_travelport_env_from_streamlit_secrets
+    from nextsky.flights.ui import _hydrate_travelport_env_from_streamlit_secrets
 
     class SecretsProxy:
         def __contains__(self, key: str) -> bool:
@@ -42,5 +42,5 @@ def test_hydrate_ignores_key_lookup_when_secrets_unavailable(monkeypatch):
     mock_st = MagicMock()
     mock_st.secrets = SecretsProxy()
 
-    with patch("nextcountry.flights.ui.st", mock_st):
+    with patch("nextsky.flights.ui.st", mock_st):
         _hydrate_travelport_env_from_streamlit_secrets()

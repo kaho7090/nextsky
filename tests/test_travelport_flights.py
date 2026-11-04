@@ -5,19 +5,19 @@ from pathlib import Path
 import httpx
 import pytest
 
-from nextcountry.flights.config import TravelportSettings, load_travelport_settings
-from nextcountry.flights.exceptions import (
+from nextsky.flights.config import TravelportSettings, load_travelport_settings
+from nextsky.flights.exceptions import (
     FlightSearchApiError,
     FlightSearchAuthError,
     FlightSearchConfigError,
     FlightSearchTransportError,
 )
-from nextcountry.flights.models import FlightSearchParams
-from nextcountry.flights.travelport.auth import TravelportTokenProvider
-from nextcountry.flights.travelport.client import TravelportSearchClient
-from nextcountry.flights.travelport.parser import parse_search_response
-from nextcountry.flights.travelport.provider import TravelportFlightSearchProvider
-from nextcountry.flights.travelport.requests import build_catalog_search_payload
+from nextsky.flights.models import FlightSearchParams
+from nextsky.flights.travelport.auth import TravelportTokenProvider
+from nextsky.flights.travelport.client import TravelportSearchClient
+from nextsky.flights.travelport.parser import parse_search_response
+from nextsky.flights.travelport.provider import TravelportFlightSearchProvider
+from nextsky.flights.travelport.requests import build_catalog_search_payload
 
 FIXTURE = Path(__file__).parent / "fixtures" / "travelport_search_with_fare_calc.json"
 

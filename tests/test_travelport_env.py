@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from nextcountry.flights.env_loader import load_project_dotenv, travelport_readiness_report
+from nextsky.flights.env_loader import load_project_dotenv, travelport_readiness_report
 
 
 def test_load_project_dotenv_reads_file(tmp_path, monkeypatch):
@@ -17,7 +17,7 @@ def test_load_project_dotenv_reads_file(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     monkeypatch.setattr(
-        "nextcountry.flights.env_loader.project_dotenv_path",
+        "nextsky.flights.env_loader.project_dotenv_path",
         lambda: env_file,
     )
     for key in (
@@ -38,7 +38,7 @@ def test_dotenv_does_not_override_existing_env(tmp_path, monkeypatch):
     env_file = tmp_path / ".env"
     env_file.write_text("TRAVELPORT_CLIENT_ID=from_file\n", encoding="utf-8")
     monkeypatch.setattr(
-        "nextcountry.flights.env_loader.project_dotenv_path",
+        "nextsky.flights.env_loader.project_dotenv_path",
         lambda: env_file,
     )
     monkeypatch.setenv("TRAVELPORT_CLIENT_ID", "from_shell")
@@ -72,7 +72,7 @@ def test_readiness_report_ready_when_all_set(monkeypatch):
     }.items():
         monkeypatch.setenv(key, val)
     monkeypatch.setattr(
-        "nextcountry.flights.env_loader.project_dotenv_path",
+        "nextsky.flights.env_loader.project_dotenv_path",
         lambda: Path("/nonexistent/.env"),
     )
     report = travelport_readiness_report()

@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from nextcountry.config import COUNTRIES_CSV, TARGET_COUNTRIES_CSV
-from nextcountry.targets import DEFAULT_TARGET_COUNTRY_CODES, load_target_country_codes
+from nextsky.config import COUNTRIES_CSV, TARGET_COUNTRIES_CSV
+from nextsky.targets import DEFAULT_TARGET_COUNTRY_CODES, load_target_country_codes
 
 
 def test_default_target_list_has_197_unique_codes():

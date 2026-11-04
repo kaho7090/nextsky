@@ -1,4 +1,7 @@
-# nextcountry
+# nextsky
+
+
+> パッケージ名を `nextcountry` から `nextsky` に変更しました（リポジトリ名に合わせた改名）。アプリの機能・データ形式に変更はありません。既存の訪問データ（`data/nextcountry.db`）はファイル名を据え置いたため、そのまま引き継がれます。
 
 NextCountry helps travellers discover unvisited countries and plan efficient trips.
 
@@ -14,7 +17,7 @@ NextCountry は、**197カ国**を訪問目標として、未訪問国を優先�
 - 国連オブザーバー: バチカン市国（`VA`）、パレスチナ（`PS`）
 - 追加: 台湾（`TW`）、コソボ（`XK`）
 
-正準リストは `data/target_countries.csv`（`code` 列）および `src/nextcountry/targets.py` の `DEFAULT_TARGET_COUNTRY_CODES` で定義します。ランキング・訪問管理 UI・地図の「対象」はこの197カ国に限定されます。
+正準リストは `data/target_countries.csv`（`code` 列）および `src/nextsky/targets.py` の `DEFAULT_TARGET_COUNTRY_CODES` で定義します。ランキング・訪問管理 UI・地図の「対象」はこの197カ国に限定されます。
 
 `data/countries.csv` は国・地域マスタ（約250件）として維持し、197件には削減しません。対象外の国・地域に保存済みの訪問状況・優先度は削除しません。
 
@@ -42,7 +45,7 @@ pip install -e ".[dev]"
 ## 起動
 
 ```bash
-streamlit run src/nextcountry/app.py
+streamlit run src/nextsky/app.py
 ```
 
 ブラウザで UI が開きます（表示言語は日本語）。
@@ -64,7 +67,7 @@ Streamlit の「航空券検索」タブから片道検索できます。認証�
 接続準備の確認（実 API は呼びません）:
 
 ```bash
-python -c "import json; from nextcountry.flights.env_loader import travelport_readiness_report as r; print(json.dumps(r(), indent=2, ensure_ascii=False))"
+python -c "import json; from nextsky.flights.env_loader import travelport_readiness_report as r; print(json.dumps(r(), indent=2, ensure_ascii=False))"
 ```
 
 - OAuth（プレプロダクション既定）: `https://auth.pp.travelport.net/oauth/token`
@@ -95,7 +98,7 @@ python -c "import json; from nextcountry.flights.env_loader import travelport_re
 ## プロジェクト構成
 
 ```text
-src/nextcountry/   アプリ本体（DB・ランキング・地図・Streamlit）
+src/nextsky/   アプリ本体（DB・ランキング・地図・Streamlit）
 data/              国マスタ・対象国リスト・GeoJSON・SQLite
 tests/             pytest
 ```
