@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from nextcountry.flights.config import TravelportSettings, load_travelport_settings
-from nextcountry.flights.models import FlightOffer, FlightSearchParams
-from nextcountry.flights.travelport.auth import TravelportTokenProvider
-from nextcountry.flights.travelport.client import TravelportSearchClient
-from nextcountry.flights.travelport.parser import parse_search_response
+from nexttrip.flights.config import TravelportSettings, load_travelport_settings
+from nexttrip.flights.models import FlightOffer, FlightSearchParams
+from nexttrip.flights.travelport.auth import TravelportTokenProvider
+from nexttrip.flights.travelport.client import TravelportSearchClient
+from nexttrip.flights.travelport.parser import parse_search_response
 
 
 class TravelportFlightSearchProvider:

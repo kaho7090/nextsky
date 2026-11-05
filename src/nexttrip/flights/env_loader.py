@@ -6,15 +6,15 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from nextcountry.config import PROJECT_ROOT
-from nextcountry.flights.config import (
+from nexttrip.config import PROJECT_ROOT
+from nexttrip.flights.config import (
     DEFAULT_API_BASE_URL,
     DEFAULT_AUTH_URL,
     REQUIRED_ENV_VARS,
     TravelportSettings,
     load_travelport_settings,
 )
-from nextcountry.flights.exceptions import FlightSearchConfigError
+from nexttrip.flights.exceptions import FlightSearchConfigError
 
 OPTIONAL_ENV_VARS = (
     "TRAVELPORT_ACCESS_GROUP",

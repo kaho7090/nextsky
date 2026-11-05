@@ -4,11 +4,11 @@ from typing import Any
 
 import httpx
 
-from nextcountry.flights.config import TravelportSettings
-from nextcountry.flights.exceptions import FlightSearchApiError, FlightSearchTransportError
-from nextcountry.flights.models import FlightSearchParams
-from nextcountry.flights.travelport.auth import TravelportTokenProvider
-from nextcountry.flights.travelport.requests import build_catalog_search_payload, build_search_headers
+from nexttrip.flights.config import TravelportSettings
+from nexttrip.flights.exceptions import FlightSearchApiError, FlightSearchTransportError
+from nexttrip.flights.models import FlightSearchParams
+from nexttrip.flights.travelport.auth import TravelportTokenProvider
+from nexttrip.flights.travelport.requests import build_catalog_search_payload, build_search_headers
 
 
 class TravelportSearchClient:

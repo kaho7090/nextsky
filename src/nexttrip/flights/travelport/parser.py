@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from nextcountry.flights.models import FlightOffer, TaxLine
+from nexttrip.flights.models import FlightOffer, TaxLine
 
 
 def _index_reference_lists(response: dict[str, Any]) -> tuple[dict[str, dict], dict[str, dict]]:

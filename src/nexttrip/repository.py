@@ -41,9 +41,14 @@ def list_countries_with_preferences(conn: sqlite3.Connection) -> list[dict[str, 
             c.name_en,
             c.name_ja,
             COALESCE(p.visited, 0) AS visited,
-            COALESCE(p.priority, 0) AS priority
+            COALESCE(p.priority, 0) AS priority,
+            r.level AS risk_level,
+            COALESCE(r.trend, '') AS risk_trend,
+            COALESCE(r.note, '') AS risk_note,
+            CASE WHEN r.country_code IS NOT NULL THEN 1 ELSE 0 END AS in_risk_watch
         FROM countries c
         LEFT JOIN user_country_preferences p ON p.country_code = c.code
+        LEFT JOIN risk_watch r ON r.country_code = c.code
         ORDER BY c.name_ja COLLATE NOCASE
         """
     ).fetchall()

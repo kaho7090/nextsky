@@ -7,7 +7,7 @@ from typing import Any
 
 import plotly.graph_objects as go
 
-from nextcountry.targets import DEFAULT_TARGET_COUNTRY_CODES
+from nexttrip.targets import DEFAULT_TARGET_COUNTRY_CODES
 
 # Natural Earth の ADM0_A3 など、ISO-A2 が無い地物向け
 ADM0_A3_TO_APP_CODE: dict[str, str] = {

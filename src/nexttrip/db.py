@@ -8,6 +8,15 @@ CREATE TABLE IF NOT EXISTS countries (
     name_ja TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS risk_watch (
+    country_code TEXT PRIMARY KEY,
+    level INTEGER CHECK (level BETWEEN 1 AND 5),
+    trend TEXT NOT NULL DEFAULT '' CHECK (trend IN ('', 'up', 'down', 'flat')),
+    note TEXT NOT NULL DEFAULT '',
+    updated TEXT NOT NULL DEFAULT '',
+    FOREIGN KEY (country_code) REFERENCES countries(code)
+);
+
 CREATE TABLE IF NOT EXISTS user_country_preferences (
     country_code TEXT PRIMARY KEY,
     visited INTEGER NOT NULL DEFAULT 0 CHECK (visited IN (0, 1)),

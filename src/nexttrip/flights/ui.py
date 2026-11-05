@@ -7,21 +7,21 @@ from datetime import date, timedelta
 import streamlit as st
 from streamlit.errors import StreamlitSecretNotFoundError
 
-from nextcountry.flights.env_loader import (
+from nexttrip.flights.env_loader import (
     load_project_dotenv,
     travelport_readiness_report,
     apply_travelport_env_from_mapping,
 )
 
-from nextcountry.flights.exceptions import (
+from nexttrip.flights.exceptions import (
     FlightSearchApiError,
     FlightSearchAuthError,
     FlightSearchConfigError,
     FlightSearchError,
     FlightSearchTransportError,
 )
-from nextcountry.flights.models import FlightSearchParams
-from nextcountry.flights.provider import get_flight_search_provider
+from nexttrip.flights.models import FlightSearchParams
+from nexttrip.flights.provider import get_flight_search_provider
 
 
 def _hydrate_travelport_env_from_streamlit_secrets() -> None:
@@ -66,7 +66,49 @@ def _render_travelport_config_status() -> bool:
     return False
 
 
-def render_flights_tab() -> None:
+_TREND_MARKS = {"up": "↑", "down": "↓", "flat": "→", "": ""}
+
+
+def target_country_label(country: dict) -> str:
+    return f"{country['name_ja']} ({country['name_en']}) [{country['code']}]"
+
+
+def target_country_context(country: dict) -> str:
+    """対象国のウォッチ文脈（Lv・動向・メモ）を1行で返す。ウォッチ外なら空文字。"""
+    if not country.get("in_risk_watch"):
+        return ""
+    parts: list[str] = []
+    level = country.get("risk_level")
+    if level is not None:
+        parts.append(f"リスクLv.{level}")
+    mark = _TREND_MARKS.get(str(country.get("risk_trend") or ""), "")
+    if mark:
+        parts.append(f"動向 {mark}")
+    note = str(country.get("risk_note") or "").strip()
+    if note:
+        parts.append(note)
+    return " / ".join(parts)
+
+
+def _render_target_country_picker(countries: list[dict]) -> None:
+    st.markdown("**対象国（未訪問）から探す**")
+    labels = ["（未選択）"] + [target_country_label(c) for c in countries]
+    by_label = {target_country_label(c): c for c in countries}
+    selected = st.selectbox("対象国", options=labels, index=0, key="fare_target_label")
+    if selected == "（未選択）":
+        st.session_state.pop("fare_target_country", None)
+        return
+    country = by_label[selected]
+    st.session_state["fare_target_country"] = country["code"]
+    context = target_country_context(country)
+    if context:
+        st.warning(f"ウォッチ情報: {context}")
+    st.caption(
+        f"目的地（IATA）には {country['name_ja']} の主要空港コードを入力してください。"
+    )
+
+
+def render_flights_tab(countries: list[dict] | None = None) -> None:
     load_project_dotenv()
     _hydrate_travelport_env_from_streamlit_secrets()
     st.subheader("航空券検索（片道・Travelport トライアル）")
@@ -75,6 +117,8 @@ def render_flights_tab() -> None:
         " Fare Calculation の取得は `includeFareCalculationInd=true` で要求します。"
     )
     _render_travelport_config_status()
+    if countries:
+        _render_target_country_picker(countries)
 
     with st.form("flight_search_form"):
         col1, col2, col3 = st.columns(3)

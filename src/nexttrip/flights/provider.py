@@ -3,8 +3,8 @@ from __future__ import annotations
 import os
 from typing import Protocol
 
-from nextcountry.flights.models import FlightOffer, FlightSearchParams
-from nextcountry.flights.travelport.provider import TravelportFlightSearchProvider
+from nexttrip.flights.models import FlightOffer, FlightSearchParams
+from nexttrip.flights.travelport.provider import TravelportFlightSearchProvider
 
 
 class FlightSearchProvider(Protocol):

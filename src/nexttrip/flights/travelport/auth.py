@@ -5,8 +5,8 @@ from typing import Any
 
 import httpx
 
-from nextcountry.flights.config import TravelportSettings
-from nextcountry.flights.exceptions import FlightSearchAuthError, FlightSearchTransportError
+from nexttrip.flights.config import TravelportSettings
+from nexttrip.flights.exceptions import FlightSearchAuthError, FlightSearchTransportError
 
 
 class TravelportTokenProvider:

@@ -32,6 +32,8 @@ def rank_unvisited(
     )
     unvisited = unvisited.reset_index(drop=True)
     unvisited.insert(0, "rank", unvisited.index + 1)
-    return unvisited[
-        ["rank", "code", "name_ja", "name_en", "priority"]
-    ]
+    columns = ["rank", "code", "name_ja", "name_en", "priority"]
+    for extra in ("risk_level", "risk_trend", "risk_note", "in_risk_watch"):
+        if extra in unvisited.columns:
+            columns.append(extra)
+    return unvisited[columns]

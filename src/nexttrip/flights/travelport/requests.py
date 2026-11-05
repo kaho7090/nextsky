@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from nextcountry.flights.config import TravelportSettings
-from nextcountry.flights.models import FlightSearchParams
+from nexttrip.flights.config import TravelportSettings
+from nexttrip.flights.models import FlightSearchParams
 
 
 def build_catalog_search_payload(

@@ -5,26 +5,27 @@ import sqlite3
 import pandas as pd
 import streamlit as st
 
-from nextcountry.config import (
+from nexttrip.config import (
     COUNTRIES_CSV,
     DEFAULT_DB_PATH,
     GEOJSON_COUNTRIES_PATH,
+    RISK_WATCH_CSV,
     TARGET_COUNTRIES_CSV,
 )
-from nextcountry.dataset import ensure_database
-from nextcountry.geomap import build_world_map_figure
-from nextcountry.ranking import rank_unvisited
-from nextcountry.repository import list_countries_with_preferences, set_priority, set_visited
-from nextcountry.flights.env_loader import load_project_dotenv
-from nextcountry.flights.ui import render_flights_tab
-from nextcountry.targets import load_target_country_codes
+from nexttrip.dataset import ensure_database
+from nexttrip.geomap import build_world_map_figure
+from nexttrip.ranking import rank_unvisited
+from nexttrip.repository import list_countries_with_preferences, set_priority, set_visited
+from nexttrip.flights.env_loader import load_project_dotenv
+from nexttrip.flights.ui import render_flights_tab
+from nexttrip.targets import load_target_country_codes
 
-st.set_page_config(page_title="NextCountry", page_icon="🌍", layout="wide")
+st.set_page_config(page_title="NextTrip", page_icon="🌍", layout="wide")
 
 
 @st.cache_resource
 def get_connection(db_path: str) -> sqlite3.Connection:
-    ensure_database(DEFAULT_DB_PATH, COUNTRIES_CSV)
+    ensure_database(DEFAULT_DB_PATH, COUNTRIES_CSV, RISK_WATCH_CSV)
     conn = sqlite3.connect(db_path, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
@@ -42,7 +43,7 @@ def _country_label(row: pd.Series) -> str:
 
 def main() -> None:
     load_project_dotenv()
-    st.title("NextCountry")
+    st.title("NextTrip")
     st.caption("未訪問国を優先度付きでランキングし、旅の計画を支援します。")
 
     target_codes = get_target_codes()
@@ -65,19 +66,31 @@ def main() -> None:
 
     with tab_rank:
         st.subheader("未訪問国ランキング（197カ国対象）")
+        watch_only = st.checkbox("ウォッチ対象国のみ（高リスク国ウォッチ）", value=False)
         ranked = rank_unvisited(df, target_codes=target_codes)
+        if watch_only and "in_risk_watch" in ranked.columns:
+            ranked = ranked[ranked["in_risk_watch"] == 1].reset_index(drop=True)
+            ranked["rank"] = ranked.index + 1
         if ranked.empty:
             st.info("未訪問の対象国がありません。")
         else:
-            display = ranked.rename(
+            display = ranked.copy()
+            if "risk_trend" in display.columns:
+                marks = {"up": "↑", "down": "↓", "flat": "→", "": ""}
+                display["動向"] = display["risk_trend"].map(marks).fillna("")
+            display = display.rename(
                 columns={
                     "rank": "順位",
                     "code": "コード",
                     "name_ja": "国名（日本語）",
                     "name_en": "国名（英語）",
                     "priority": "優先度",
+                    "risk_level": "リスクLv",
+                    "risk_note": "ウォッチメモ",
                 }
             )
+            drop_cols = [c for c in ("risk_trend", "in_risk_watch") if c in display.columns]
+            display = display.drop(columns=drop_cols)
             st.dataframe(display, use_container_width=True, hide_index=True)
 
     with tab_map:
@@ -127,7 +140,12 @@ def main() -> None:
             st.rerun()
 
     with tab_flights:
-        render_flights_tab()
+        unvisited_targets = [
+            r
+            for r in records
+            if r["code"] in target_codes and not r["visited"]
+        ]
+        render_flights_tab(unvisited_targets)
 
 
 if __name__ == "__main__":
