@@ -1,6 +1,6 @@
 import pytest
 
-from nextcountry.repository import list_countries_with_preferences, set_priority, set_visited
+from nexttrip.repository import list_countries_with_preferences, set_priority, set_visited
 
 
 def test_set_visited_and_priority_persist(db_conn):

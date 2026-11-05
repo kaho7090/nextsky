@@ -1,6 +1,6 @@
 import pandas as pd
 
-from nextcountry.ranking import rank_unvisited
+from nexttrip.ranking import rank_unvisited
 
 
 def test_rank_unvisited_excludes_visited_and_sorts():

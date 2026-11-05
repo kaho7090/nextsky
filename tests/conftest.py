@@ -4,8 +4,8 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from nextcountry.db import init_schema
-from nextcountry.dataset import seed_countries
+from nexttrip.db import init_schema
+from nexttrip.dataset import seed_countries
 
 
 @pytest.fixture

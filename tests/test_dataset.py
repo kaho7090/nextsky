@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from nextcountry.config import COUNTRIES_CSV
-from nextcountry.dataset import ensure_database, load_countries_csv
+from nexttrip.config import COUNTRIES_CSV
+from nexttrip.dataset import ensure_database, load_countries_csv
 
 
 def test_bundled_countries_csv_has_required_columns():
