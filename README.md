@@ -81,7 +81,17 @@ python -c "import json; from nexttrip.flights.env_loader import travelport_readi
 | `data/countries.csv` | 国・地域マスタ（英語名・日本語名） |
 | `data/target_countries.csv` | 訪問目標197カ国のコード一覧 |
 | `data/geo/ne_50m_admin_0_countries.geojson` | 世界地図用国境データ（Natural Earth） |
+| `data/cases.json` | エラー運賃ケース集 C-01〜C-07（下記「ケース＆マトリクス」参照） |
+| `data/fare_matrix.csv` | アジア発・国別最安マトリクス（片道、ロング形式） |
+| `data/fare_matrix_cpm.csv` | マトリクス主要セルの CPM（JPY/mile）ランキング |
 | `data/nexttrip.db` | 訪問状況・優先度（初回起動時に自動作成、git 管理外） |
+
+## ケース＆マトリクス（運賃側の記録）
+
+「ケース＆マトリクス」タブは読み取り専用で、運賃側の検証資産を表示します。
+
+- **ケース集**: NextTicket エラー運賃ケース集（2026-11-05 時点）から **C-01〜C-07** を抜粋。判定ラベル（PHANTOM / UNRESOLVED / TICKETED 等）と到達ステージはケース集の原文どおりで、伝聞ケース（C-03）は伝聞と明記しています。内部案件の **C-08 / C-09 は含みません**（読み込み時にも除外します）。
+- **運賃マトリクス**: 2026-11-05 の Skyscanner Explore スナップショット（出発地＝国レベル、到着＝anywhere、片道の推定最安）。予約可能な確定価格ではありません。円換算は概算（USD 建ては ¥150 換算）で、CPM は運賃 ÷ 大圏距離（概算）の JPY/mile です。
 
 ### 地図データの出典
 
