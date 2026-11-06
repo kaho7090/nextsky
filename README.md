@@ -1,5 +1,7 @@
 # nexttrip
 
+> **名称について**: 製品名は **NextTrip**。GitHub リポジトリ名は `nextsky`、Python パッケージ名・配布名は `nexttrip` です（旧称 NextCountry。経緯は末尾「改名について」参照）。
+
 NextTrip helps travellers discover unvisited countries and plan efficient trips.
 
 ## 概要
@@ -81,7 +83,7 @@ python -c "import json; from nexttrip.flights.env_loader import travelport_readi
 | `data/countries.csv` | 国・地域マスタ（英語名・日本語名） |
 | `data/target_countries.csv` | 訪問目標197カ国のコード一覧 |
 | `data/geo/ne_50m_admin_0_countries.geojson` | 世界地図用国境データ（Natural Earth） |
-| `data/nexttrip.db` | 訪問状況・優先度（初回起動時に自動作成、git 管理外） |
+| `data/nextcountry.db` | 訪問状況・優先度（初回起動時に自動作成、git 管理外）。ファイル名は既存データ保持のため旧称のまま据え置き（「改名について」参照） |
 
 ### 地図データの出典
 
@@ -102,4 +104,4 @@ tests/             pytest
 
 ## 改名について（2026-11-05）
 
-旧称 NextCountry から **NextTrip** に統合改名した。197カ国の訪問管理（Country の役割）と運賃探索（Fare の役割）を1つのプロダクトに束ねるための改名で、パッケージ名も `nexttrip` に統一している。なお、既存の訪問・優先度データを保持するため、SQLite のファイル名は当面 `data/nextcountry.db` のまま据え置く。
+旧称 NextCountry から **NextTrip** に統合改名した。197カ国の訪問管理（Country の役割）と運賃探索（Fare の役割）を1つのプロダクトに束ねるための改名で、パッケージ名も `nexttrip` に統一している。なお、既存の訪問・優先度データを保持するため、SQLite のファイル名は当面 `data/nextcountry.db` のまま据え置く。また、GitHub リポジトリ名は 2026-11-04 に nextticket から改名した `nextsky` のままであり、製品名（NextTrip）とは異なる。
